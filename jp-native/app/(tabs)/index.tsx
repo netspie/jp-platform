@@ -5,6 +5,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useState } from "react";
+import { WordList } from "@/components/wordList/WordList";
 
 export default function HomeScreen() {
   const [shown, setShown] = useState(false);
@@ -34,6 +35,7 @@ export default function HomeScreen() {
           setShown(!shown);
         }}
       />
+      <WordList />
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
