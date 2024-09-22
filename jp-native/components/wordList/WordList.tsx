@@ -13,11 +13,11 @@ export function WordList(props: WordListProps) {
   }, []);
 
   return (
-    <Stack>
-      {words?.map((word) => (
-        <WordItem word={word} />
+    <View>
+      {words?.slice(0, 50).map((word, i) => (
+        <WordItem key={i} word={word} />
       ))}
-    </Stack>
+    </View>
   );
 }
 

@@ -1,22 +1,24 @@
 package words
 
 import (
+	"fmt"
 	"jps/basic/ddd"
 	"jps/basic/httpx"
 	"net/http"
 )
 
 func (handler WordRouteHandler) HandleGetMany(w http.ResponseWriter, r *http.Request) {
-	res := HandleGetSubmitQuestionsQuery(GetWordsQuery{}, handler.Repo)
+	res := HandleGetWordsQuery(GetWordsQuery{}, handler.Repo)
 	httpx.WriteResponse(res, w)
 }
 
 type GetWordsQuery struct{}
 
-func HandleGetSubmitQuestionsQuery(
+func HandleGetWordsQuery(
 	q GetWordsQuery,
 	r *ddd.Repository[*Word]) []*Word {
 
 	items, _ := (*r).GetMany()
+	fmt.Println("GetWordsQuery")
 	return items[:min(len(items), 1000)]
 }

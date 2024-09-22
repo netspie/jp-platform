@@ -1,7 +1,8 @@
 export async function fetchWords(): Promise<Word[]> {
-  const url = "localhost:4000/api/v1/words";
+  const url = `https://fair-breads-wave.loca.lt/api/v1/words`;
 
   const res = await fetch(url);
+
   return await res.json();
 }
 
