@@ -20,5 +20,5 @@ func HandleGetWordsQuery(
 
 	items, _ := (*r).GetMany()
 	fmt.Println("GetWordsQuery")
-	return items[:min(len(items), 1000)]
+	return items[:min(len(items), 100)]
 }

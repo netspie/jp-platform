@@ -1,8 +1,7 @@
 export async function fetchWords(): Promise<Word[]> {
-  const url = `https://fair-breads-wave.loca.lt/api/v1/words`;
+  const url = `https://cool-birds-tap.loca.lt/api/v1/words`;
 
   const res = await fetch(url);
-
   return await res.json();
 }
 

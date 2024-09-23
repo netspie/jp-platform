@@ -1,6 +1,5 @@
 import { Linking, Pressable, Text, View } from "react-native";
 import { fetchWords, Word } from "./FetchWords";
-import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 
 type WordListProps = {};
@@ -29,65 +28,54 @@ export function WordItem(props: WordItemProps) {
   const { word } = props;
 
   return (
-    <View className="p-4 mb-3 bg-gray-100 rounded-lg border border-gray-300">
-      <Text className="text-xl font-bold mb-2">{word.characters}</Text>
-
-      <Text className="text-sm font-semibold">
-        Slug: <Text className="font-normal">{word.slug}</Text>
-      </Text>
-      <Text className="text-sm font-semibold">
-        Level: <Text className="font-normal">{word.level}</Text>
-      </Text>
-      <Text className="text-sm font-semibold">
-        Created At:{" "}
-        <Text className="font-normal">
-          {new Date(word.created_at).toLocaleDateString()}
-        </Text>
-      </Text>
-
-      {word.hidden_at && (
-        <Text className="text-sm font-semibold">
-          Hidden At:{" "}
+    <View className="p-4 rounded-lg w-fit">
+      <View className="w-full h-[1px] bg-gray-700 mb-6" />
+      <Text className="text-4xl font-bold">{word.slug}</Text>
+      <View className="flex flex-row justify-between gap-3 mb-5">
+        <View className="w-1/4 flex flex-col text-sm font-semibold pt-2">
+          <Text className="text-gray-500 font-bold">Meaning</Text>
           <Text className="font-normal">
-            {new Date(word.hidden_at).toLocaleDateString()}
+            {/* {word.meanings.map((m) => m.meaning).join(", ")} */}
+            {word.meanings[0].meaning}
           </Text>
-        </Text>
-      )}
-
-      <Pressable onPress={() => Linking.openURL(word.document_url)}>
-        <Text className="text-sm font-semibold text-blue-500 underline">
-          Document URL
-        </Text>
-      </Pressable>
-
-      <Text className="text-sm font-semibold">
-        Meanings:{" "}
-        <Text className="font-normal">
-          {word.meanings.map((m) => m.meaning).join(", ")}
-        </Text>
-      </Text>
-      <Text className="text-sm font-semibold">
-        Readings:{" "}
-        <Text className="font-normal">
-          {word.readings.map((r) => r.reading).join(", ")}
-        </Text>
-      </Text>
-      <Text className="text-sm font-semibold">
-        Parts of Speech:{" "}
-        <Text className="font-normal">{word.parts_of_speech.join(", ")}</Text>
-      </Text>
-      <Text className="text-sm font-semibold">
+        </View>
+        <View className="w-1/4 flex flex-col text-sm font-semibold pt-2">
+          <Text className="text-gray-500 font-bold">Reading</Text>
+          <Text className="font-normal">
+            {/* {word.readings.map((r) => r.reading).join(", ")} */}
+            {word.readings[0].reading}
+          </Text>
+        </View>
+        <View className="w-1/4 flex flex-col text-sm font-semibold pt-2">
+          <Text className="text-gray-500 font-bold">Speech</Text>
+          <Text className="font-normal">
+            {/* {word.parts_of_speech.join(", ")} */}
+            {uppercaseFirstChar(word.parts_of_speech[0])}
+          </Text>
+        </View>
+        {/* <Text className="text-sm font-semibold">
         Lesson Position:{" "}
         <Text className="font-normal">{word.lesson_position}</Text>
-      </Text>
-      <Text className="text-sm font-semibold">
+      </Text> */}
+        {/* <Text className="text-sm font-semibold">
         Meaning Mnemonic:{" "}
         <Text className="font-normal">{word.meaning_mnemonic}</Text>
-      </Text>
-      <Text className="text-sm font-semibold">
+      </Text> */}
+        {/* <Text className="text-sm font-semibold">
         Reading Mnemonic:{" "}
         <Text className="font-normal">{word.reading_mnemonic}</Text>
-      </Text>
+      </Text> */}
+      </View>
+      <Pressable onPress={() => Linking.openURL(word.document_url)}>
+        <Text className="text-sm font-semibold text-blue-500 underline">
+          Wanikani
+        </Text>
+      </Pressable>
     </View>
   );
+}
+
+function uppercaseFirstChar(str: string): string {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
