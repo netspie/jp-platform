@@ -12,14 +12,26 @@ type RouteHandler interface {
 	HandleDelete(w http.ResponseWriter, r *http.Request)
 }
 
+func enableCORS(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+}
+
 func HandleRequests(mux *http.ServeMux, resourcePath string, handler RouteHandler) {
 	mux.HandleFunc(
 		resourcePath,
-		func(w http.ResponseWriter, r *http.Request) { getOrCreateResourceHandler(w, r, handler) })
+		func(w http.ResponseWriter, r *http.Request) { 
+			enableCORS(w, r)
+			getOrCreateResourceHandler(w, r, handler) 
+		})
 
 	mux.HandleFunc(
 		resourcePath+"/",
-		func(w http.ResponseWriter, r *http.Request) { getUpdateOrDeleteResourceHandler(w, r, handler) })
+		func(w http.ResponseWriter, r *http.Request) { 
+			enableCORS(w, r)
+			getUpdateOrDeleteResourceHandler(w, r, handler) 
+		})
 }
 
 func getOrCreateResourceHandler(w http.ResponseWriter, r *http.Request, handler RouteHandler) {
